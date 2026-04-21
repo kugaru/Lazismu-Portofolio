@@ -18,23 +18,19 @@ html, body {
   background: transparent;
 }
 
-/* CONTAINER FIX (inti dari semua masalah sebelumnya) */
 .container {
   position: relative;
   width: 100%;
-  height: 60vh;
-  max-height: 500px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 
-/* Desktop adjustment */
 @media (min-width: 768px) {
   .container {
     height: 70vh;
   }
 }
 
-/* Image & Video */
 .before, .after {
   position: absolute;
   top: 0;
@@ -44,13 +40,11 @@ html, body {
   object-fit: cover;
 }
 
-/* After (video reveal) */
 .after {
   clip-path: inset(0 0 0 var(--pos, 50%));
   z-index: 2;
 }
 
-/* Slider */
 input[type="range"] {
   position: absolute;
   width: 100%;
@@ -61,7 +55,6 @@ input[type="range"] {
   z-index: 10;
 }
 
-/* Line divider */
 .line {
   position: absolute;
   top: 0;
@@ -75,7 +68,6 @@ input[type="range"] {
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-/* Optional: nicer handle dot */
 .line::after {
   content: "";
   position: absolute;
