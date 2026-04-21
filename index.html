@@ -1,71 +1,116 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: transparent; }
-        
-      .container {
-  width: 100%;
-  height: 60vh;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        html, body {
+<style>
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: transparent;
 }
 
-        .before, .after {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
+/* CONTAINER FIX (inti dari semua masalah sebelumnya) */
+.container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  max-height: 500px;
+  overflow: hidden;
+}
 
-        .after {
-            /* Variabel --pos akan diatur oleh slider */
-            clip-path: inset(0 0 0 var(--pos, 50%));
-            z-index: 2;
-        }
+/* Desktop adjustment */
+@media (min-width: 768px) {
+  .container {
+    height: 70vh;
+  }
+}
 
-        input[type="range"] {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            appearance: none;
-            background: transparent;
-            cursor: ew-resize;
-            z-index: 10;
-        }
+/* Image & Video */
+.before, .after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-        .line {
-            position: absolute;
-            top: 0; bottom: 0; width: 4px;
-            background: white;
-            left: var(--pos, 50%);
-            transform: translateX(-50%);
-            z-index: 5;
-            pointer-events: none;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-    </style>
+/* After (video reveal) */
+.after {
+  clip-path: inset(0 0 0 var(--pos, 50%));
+  z-index: 2;
+}
+
+/* Slider */
+input[type="range"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  z-index: 10;
+}
+
+/* Line divider */
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: white;
+  left: var(--pos, 50%);
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Optional: nicer handle dot */
+.line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container" id="box">
-        <img src="https://res.cloudinary.com/dawp3i91h/image/upload/v1776759271/Scene_18_End_Frame_dcbvtk.png" class="before">
-        
-       <video class="after" autoplay muted loop playsinline crossorigin="anonymous">
-    <source src="https://res.cloudinary.com/dawp3i91h/video/upload/v1776759110/Lazismu_-_Scene_18_ojgpyl.mp4" type="video/mp4">
-</video>
+<div class="container" id="box">
+  
+  <img src="https://res.cloudinary.com/dawp3i91h/image/upload/v1776759271/Scene_18_End_Frame_dcbvtk.png" class="before">
 
-        <input type="range" min="0" max="100" value="50" oninput="document.getElementById('box').style.setProperty('--pos', this.value + '%')">
-        <div class="line"></div>
-    </div>
+  <video class="after" autoplay muted loop playsinline preload="auto">
+    <source src="https://res.cloudinary.com/dawp3i91h/video/upload/v1776759110/Lazismu_-_Scene_18_ojgpyl.mp4" type="video/mp4">
+  </video>
+
+  <input type="range" min="0" max="100" value="50"
+    oninput="document.getElementById('box').style.setProperty('--pos', this.value + '%')">
+
+  <div class="line"></div>
+
+</div>
+
+<script>
+const video = document.querySelector("video");
+video.play().catch(() => {});
+</script>
 
 </body>
 </html>
